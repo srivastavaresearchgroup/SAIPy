@@ -28,7 +28,7 @@ def custom_loss2(y_true, y_pred):
     return weights[0] * mse(y_true, y_pred) + weights[1] * mae(y_true, y_pred) + weights[2] * mag_estimation_loss(y_true, y_pred)
 
 class CREIME:
-    def __init__(self, directory = os.getcwd(), metadata_only = False):
+    def __init__(self):
         self.model = keras.models.load_model('Models/CREIME.h5', custom_objects = {'custom_loss2': custom_loss2})
        
     def __str__(self):
