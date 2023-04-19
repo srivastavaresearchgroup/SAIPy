@@ -164,3 +164,45 @@ class STEAD:
             Xarr.append(data[p_arr - 32: p_arr + 32, 2])
 
         return (np.array(Xarr))
+    
+    def get_creime_rt_data(self,traces = None):
+        
+        if self.waveforms is None:
+            raise ValueError(
+                "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
+        
+        if traces is None:
+            traces = self.trace_list()
+            
+        Xarr = []
+        yarr = []
+        
+        pbar = tqdm(total=len(traces))
+        
+        for evi in traces:
+            pbar.update()
+            dataset = self.waveforms.get('data/'+str(evi)) 
+            data = np.array(dataset)
+            
+            if dataset.attrs['trace_category'] == 'noise':
+                st = randint(0, 5999 - 300)
+                end = randint(st +300, 5999)
+
+                Xarr.append(data[st: end, :])
+                y = -4 * np.ones((6000))
+                yarr.append(y)
+            
+            else:
+                p_arr = int(dataset.attrs['p_arrival_sample'])
+
+                if float(p_arr) < 100:
+                    continue
+                st = randint(0, p_arr - 100)
+                end = randint(p_arr + 100, 5999)
+
+                Xarr.append(data[st: end, :])
+                y = -4 * np.ones((6000))
+                y[p_arr - st:] = y[p_arr - st:] * -1 * float(dataset.attrs['source_magnitude'])
+                yarr.append(y)
+
+        return (Xarr, np.array(yarr))
