@@ -11,6 +11,7 @@ import keras
 from keras.models import Model
 from keras.layers import Input, LSTM
 from keras import layers
+import tensorflow as tf
 
 def mag_estimation_loss(y_true, y_pred):
     
@@ -210,7 +211,11 @@ class PolarCAP:
     
 class CREIME_RT:
     def __init__(self):
-        self.model = keras.models.load_model('Models/CREIME_RT.h5', custom_objects = {'custom_loss3': custom_loss3})
+        with open('Models/CREIME_RT.json', 'r') as json_file:
+            json_savedModel= json_file.read()
+        #load the model architecture 
+        self.model = tf.keras.models.model_from_json(json_savedModel)
+        self.model.load_weights('Models/CREIME_RT.h5')
        
     def __str__(self):
         stringlist = []
