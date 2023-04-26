@@ -44,7 +44,7 @@ def plot_creime_data(X,y, y_pred = None):
                    Line2D([0], [0], color='g', label='CREIME Prediction')]
             ax[3].legend(handles=legend_elements, loc=0)
             
-def plot_polarcap_data(X, y_pred = None):
+def plot_polarcap_data(X, y_true = None, y_pred = None):
     plt.figure(figsize = [5,4])
     plt.plot(norm(np.array([X]))[0], color = 'k')
     plt.axvline(32, ls = '--', lw = 1.5, color = 'red')
@@ -52,12 +52,16 @@ def plot_polarcap_data(X, y_pred = None):
     plt.ylabel('Normalised\nAmplitude', fontsize = 14)
     plt.ylim(-1,1)
     
-    if y_pred is not None:
+    if y_pred is not None and y_true is not None:
+        plt.title('True Polarity: {}\nPredicted polarity: {}\nProbability = {:.2f}'.format(y_true[0], y_pred[0], y_pred[1]))
+    
+    elif y_pred is not None:
         plt.title('Predicted polarity: {}\nProbability = {:.2f}'.format(y_pred[0], y_pred[1]))
         
+    elif y_true is not None:
+        plt.title('True Polarity: {}'.format(y_true[0])) 
+        
 def plot_creime_rt_data(X,y, y_pred = None):
-    
-    
     fig, ax = plt.subplots(4,1,figsize = [7,8], sharex = True)
 
     props = dict(boxstyle='round', facecolor='white', alpha=0.5)

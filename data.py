@@ -1,3 +1,5 @@
+from sklearn.utils import shuffle
+
 def string_convertor(dd):
     
     dd2 = str(dd).split()
@@ -158,7 +160,8 @@ class STEAD:
             pbar.update()
             dataset = self.waveforms.get('data/'+str(evi)) 
             data = np.array(dataset)
-            
+            if dataset.attrs['trace_category'] == 'noise':
+                continue
             p_arr = int(dataset.attrs['p_arrival_sample'])
 
             Xarr.append(data[p_arr - 32: p_arr + 32, 2])
@@ -206,3 +209,203 @@ class STEAD:
                 yarr.append(y)
 
         return (Xarr, np.array(yarr))
+    
+    
+    
+class INSTANCE:
+    def __init__(self, directory = os.getcwd(), metadata_only = False, data = 'both'):
+        self.metadata_n = None
+        self.waveforms_n = None
+        self.metadata_ev = None
+        self.waveforms_ev = None
+        if os.path.exists(os.path.join(directory, 'INSTANCE')):
+            if data == 'both':
+                self.metadata_n = pd.read_csv(os.path.join(directory, 'INSTANCE','metadata_Instance_noise.csv'), low_memory = False)
+                self.metadata_ev = pd.read_csv(os.path.join(directory, 'INSTANCE','metadata_Instance_events.csv'), low_memory = False)
+            elif data == 'noise':
+                self.metadata_n = pd.read_csv(os.path.join(directory, 'INSTANCE','metadata_Instance_noise.csv'), low_memory = False)
+            elif data == 'events':
+                self.metadata_n = pd.read_csv(os.path.join(directory, 'INSTANCE','metadata_Instance_events.csv'), low_memory = False)
+            else:
+                raise UnexpectedInputError("Unexpected input to keyword data. The only acceptable inputs are 'noise', 'events' and 'both'")
+            if not metadata_only:
+                if data == 'both':
+                    self.waveforms_ev = h5py.File(os.path.join(directory, 'INSTANCE','Instance_events_counts.hdf5'), 'r')
+                    self.waveforms_n = h5py.File(os.path.join(directory, 'INSTANCE','Instance_noise.hdf5'), 'r')
+                elif data == 'events':
+                    self.waveforms_ev = h5py.File(os.path.join(directory, 'INSTANCE','Instance_events_counts.hdf5'), 'r')
+                elif data == 'noise':
+                    self.waveforms_ev = h5py.File(os.path.join(directory, 'INSTANCE','Instance_noise.hdf5'), 'r')
+
+        else:
+            if directory == 'os.getcwd':
+                raise FileNotFoundError(
+                    """
+                    No folder named 'INSTANCE' found in the current working directory. 
+                    If you have the dataset saved in some other directory, please provide the path to the directory using keyword directory.
+                    Else, download the dataset following the instructions given in https://github.com/INGV/instance"
+                    """)
+            else:
+                raise FileNotFoundError(
+                    """
+                    No folder named 'INSTANCE' found in the specified directory.
+                    Please, download the dataset following the instructions given in https://github.com/INGV/instance"
+                    """)
+
+    def __str__(self):
+        if self.metadata_n is not None:
+            display(self.metadata_n.head())
+        if self.metadata_ev is not None:
+            display(self.metadata_ev.head())
+        return("INSTANCE Dataset")
+        
+    def trace_list_noise(self):
+        return self.metadata_n['trace_name'].to_list()
+    
+    def trace_list_events(self):
+        return self.metadata_ev['trace_name'].to_list()
+    
+    def distribution(self, parameter, traces = None, log = False, ax = None, color = 'slategrey'):
+        if traces is None:
+            df = self.metadata_ev
+        else:
+            df = self.metadata_ev[self.metadata_ev['trace_name'].isin(traces)]
+            
+        if ax is None:
+            fig, ax = plt.subplots(1, figsize = [7,5])
+        
+        if parameter.lower() in ['mag', 'magnitude', 'source_magnitude']:
+            ax.hist(df['source_magnitude'], log = log, color = color, edgecolor = 'k')
+            ax.set_xlabel('source_magnitude')
+            ax.set_ylabel('Frequeny')
+            
+        elif parameter.lower() in ['dist', 'epicentral', 'path_ep_distance_km']:
+            ax.hist(df['path_ep_distance_km'], log = log, color = color, edgecolor = 'k')
+            ax.set_xlabel('source_distance_km')
+            ax.set_ylabel('Frequeny')
+            
+        else:
+            ax.hist(df[parameter], log = log, color = color, edgecolor = 'k')
+            ax.set_xlabel(parameter)
+            ax.set_ylabel('Frequeny')
+            
+    def get_creime_data(self,traces_n = None, traces_ev = None):
+        
+        if self.waveforms_ev is None and self.waveforms_n is None:
+            raise ValueError(
+                "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
+        
+        if traces_n is None:
+            traces_n = self.trace_list_noise()
+        if traces_ev is None:
+            traces_ev = self.trace_list_events()
+            
+        Xarr = []
+        yarr = []
+        
+        pbar = tqdm(total=len(traces_n))
+        
+        for evi in traces_n:
+            pbar.update()
+            dataset = self.waveforms_n.get('data/'+str(evi)) 
+            data = np.transpose(np.array(dataset))
+            st = randint(0, 5999 - 512)
+
+            Xarr.append(data[st: st + 512, :])
+            y = -4 * np.ones((512))
+            yarr.append(y)
+            
+        pbar = tqdm(total=len(traces_ev))
+        
+        for evi in traces_ev:
+            pbar.update()
+            dataset = self.waveforms_ev.get('data/'+str(evi)) 
+            data = np.transpose(np.array(dataset))
+            
+            p_arr = int(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['trace_P_arrival_sample'])
+
+            if float(p_arr) < 412:
+                continue
+            t0 = randint(312, 412)
+            st = p_arr - t0
+
+            Xarr.append(data[st: st + 512, :])
+            y = -4 * np.ones((512))
+            y[t0:] = y[t0:] * -1 * float(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['source_magnitude'])
+            yarr.append(y)
+
+        return shuffle(np.array(Xarr), np.array(yarr))
+    
+    
+    def get_polarcap_data(self,traces = None):
+        
+        if self.waveforms_ev is None:
+            raise ValueError(
+                "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
+        
+        if traces is None:
+            traces = self.trace_list_events()
+            
+        Xarr = []
+        yarr = []
+        
+        pbar = tqdm(total=len(traces))
+        
+        for evi in traces:
+            pbar.update()
+            dataset = self.waveforms_ev.get('data/'+str(evi)) 
+            data = np.transpose(np.array(dataset))
+            
+            p_arr = int(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['trace_P_arrival_sample'])
+
+            Xarr.append(data[p_arr - 32: p_arr + 32, 2])
+            yarr.append(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['trace_polarity'])
+        return (np.array(Xarr), np.array(yarr))
+    
+    def get_creime_rt_data(self,traces_n = None,traces_ev = None):
+        
+        if self.waveforms_ev is None and self.waveforms_n is None:
+            raise ValueError(
+                "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
+        
+        if traces_n is None:
+            traces_n = self.trace_list_noise()
+        if traces_ev is None:
+            traces_ev = self.trace_list_events()
+            
+        Xarr = []
+        yarr = []
+        
+        pbar = tqdm(total=len(traces_n))
+        
+        for evi in traces_n:
+            pbar.update()
+            dataset = self.waveforms_n.get('data/'+str(evi)) 
+            data = np.transpose(np.array(dataset))
+            
+            st = randint(0, 5999 - 300)
+            end = randint(st +300, 5999)
+
+            Xarr.append(data[st: end, :])
+            y = -4 * np.ones((6000))
+            yarr.append(y)
+            
+        pbar = tqdm(total=len(traces_ev))
+        
+        for evi in traces_ev:
+            pbar.update()
+            dataset = self.waveforms_ev.get('data/'+str(evi)) 
+            data = np.transpose(np.array(dataset))   
+            p_arr = int(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['trace_P_arrival_sample'])
+
+            if float(p_arr) < 100:
+                continue
+            st = randint(0, p_arr - 100)
+            end = randint(p_arr + 100, 5999)
+
+            Xarr.append(data[st: end, :])
+            y = -4 * np.ones((6000))
+            y[p_arr - st:] = y[p_arr - st:] * -1 * float(self.metadata_ev[self.metadata_ev['trace_name'] == evi]['source_magnitude'])
+            yarr.append(y)
+
+        return shuffle(Xarr, np.array(yarr))
