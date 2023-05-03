@@ -559,7 +559,7 @@ class CREIME:
         
         for n,m,p in zip(n_p, mp, pp):
             if n:
-                predictions.append([0,None,None])
+                predictions.append((0,None,None))
             else:
                 predictions.append((1, m, p))
                 
@@ -712,7 +712,7 @@ class CREIME_RT:
         
         for n,m in zip(n_p, mp):
             if n:
-                predictions.append([0,None])
+                predictions.append((0,None))
             else:
                 predictions.append((1, m))
                 
