@@ -7,7 +7,7 @@ Seismology has witnessed significant advancements in recent years with the appli
 A STEAD dataset object.
 
 Parameters: directory (str, optional): path to directory where ‘STEAD’ folder can be found; defaults to current working directory\
-            metadata_only (bool, optional): if True only metadata is read to the object
+            *Tabspace*metadata_only (bool, optional): if True only metadata is read to the object
             
 Attributes: metadata: pandas.DataFrame containing metadata\
-            waveforms: h5py object containing waveforms
+            *Tabspace*waveforms: h5py object containing waveforms
