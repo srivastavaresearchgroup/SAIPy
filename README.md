@@ -6,10 +6,8 @@ Seismology has witnessed significant advancements in recent years with the appli
 ### deepseis.data.base.STEAD(directory = os.getcwd(), metadata_only = False)
 A STEAD dataset object.
 
-Parameters: directory (str, optional): path to directory where ‘STEAD’ folder can be found; defaults to current working directory
-
+Parameters: directory (str, optional): path to directory where ‘STEAD’ folder can be found; defaults to current working directory\
             metadata_only (bool, optional): if True only metadata is read to the object
             
-Attributes: metadata: pandas.DataFrame containing metadata
-
+Attributes: metadata: pandas.DataFrame containing metadata\
             waveforms: h5py object containing waveforms
