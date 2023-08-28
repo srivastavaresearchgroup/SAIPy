@@ -11,7 +11,7 @@ with open(Path(os.path.dirname(__file__)) / "requirements.txt") as f:
     required = f.readlines()
 
 setup(
-    name="deepseis",
+    name="saipy",
     version="0.0.0",
     author="Megha, Wei, and Nishtha",
     author_email="sai_group@gmail.com",
