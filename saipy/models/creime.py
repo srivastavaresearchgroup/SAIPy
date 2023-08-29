@@ -71,6 +71,12 @@ def spec(X):
     
     return np.transpose(np.array(X_spec), (1,2,0))
 
+'''
+transformer block code from  S Mostafa Mousavi, William L Ellsworth, Weiqiang Zhu, Lindsay Y Chuang, and Gregory C Beroza. Earthquake
+transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking. Nature
+communications, 11(1):3952, 2020.
+'''
+
 class SeqSelfAttention(keras.layers.Layer):
     """Layer initialization. modified from https://github.com/CyberZHG
     For additive attention, see: https://arxiv.org/pdf/1806.01264.pdf
@@ -516,7 +522,11 @@ def transformer(drop_rate, width, name, inpC):
     norm_out = LayerNormalization()(FF_add)
     
     return norm_out, weight
-
+'''
+End of transformer block code from  S Mostafa Mousavi, William L Ellsworth, Weiqiang Zhu, Lindsay Y Chuang, and Gregory C Beroza. Earthquake
+transformer—an attentive deep-learning model for simultaneous earthquake detection and phase picking. Nature
+communications, 11(1):3952, 2020.
+'''
 
 class CREIME:
     def __init__(self):
