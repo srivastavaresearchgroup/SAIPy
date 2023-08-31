@@ -10,3 +10,7 @@ We strive to constantly improve and update SAIPy.
 Should you have any queries or suggestions do not hesitate to contact the co-developers:
 * Megha Chakraborty (chakraborty@fias.uni-frankfurt.de)
 * Wei Li (wli@fias.uni-frankfurt.de)
+
+## Citation
+Cite as:
+Li, W.*, Chakraborty, M.*, Cartaya, C. Q., Faber, J., Ruempker, G., & Srivastava, N. (2023). SAIPy: A Python Package for single station Earthquake Monitoring using Deep Learning. arXiv preprint arXiv:2308.11428.
