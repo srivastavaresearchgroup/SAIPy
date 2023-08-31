@@ -6,26 +6,31 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
-
-with open(Path(os.path.dirname(__file__)) / "requirements.txt") as f:
-    required = f.readlines()
-
 setup(
     name="saipy",
-    version="0.0.0",
     author="Megha, Wei, and Nishtha",
     author_email="sai_group@gmail.com",
     description="Deep learnig-based seismological application",
-#     license="GPLv3",
-    classifiers=[
-        "Programming Language :: Python :: 3",
-#         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-        "Operating System :: OS Independent",
-    ],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/srivastavaresearchgroup/DeepSeis",
+    url="https://github.com/srivastavaresearchgroup/SAIPy",
+    license="MIT",
     packages=find_packages(exclude="tests"),
-    python_requires=">=3.7",
-    install_requires=required,
+    install_requires=[
+	'pytest==6.2.3',
+	'numpy==1.21.0',      
+	'keyring==22.3.0', 
+	'pkginfo==1.7.0',
+	'scipy==1.6.2',
+	'tensorflow-estimator==2.12.0',	
+    'tensorflow~=2.8.0',  
+	'keras==2.8.0', 
+	'matplotlib==3.7.1', 
+	'pandas==1.1.5',
+	'tqdm==4.65.0', 
+	'h5py==2.10.0', 
+	'obspy==1.4.0',
+	'jupyter==1.0.0'], 
+    
+    python_requires='>=3.8',
 )
