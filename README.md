@@ -13,4 +13,5 @@ Should you have any queries or suggestions do not hesitate to contact the co-dev
 
 ## Citation
 Cite as:
-Li, W.*, Chakraborty, M.*, Cartaya, C. Q., Faber, J., Ruempker, G., & Srivastava, N. (2023). SAIPy: A Python Package for single station Earthquake Monitoring using Deep Learning. arXiv preprint arXiv:2308.11428.
+
+Li, W.\*, Chakraborty, M.\*, Cartaya, C. Q., Faber, J., Ruempker, G., & Srivastava, N. (2023). SAIPy: A Python Package for single station Earthquake Monitoring using Deep Learning. arXiv preprint arXiv:2308.11428.
