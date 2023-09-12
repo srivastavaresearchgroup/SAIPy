@@ -12,7 +12,8 @@ Should you have any queries or suggestions do not hesitate to contact the author
 * Wei Li (wli@fias.uni-frankfurt.de)
 * Claudia Quinteros Cartaya (quinteros@fias.uni-frankfurt.de)
 * Jonas Köhler (jkoehler@fias.uni-frankfurt.de)
-* Nishtha Srivastava (srivastava@fias.uni-frankfurt.de)
+* Johannes Faber (faber@fias.uni-frankfurt.de)
+* Nishtha Srivastava-Team leader (srivastava@fias.uni-frankfurt.de)
   
 ## Citation
 Cite as:
