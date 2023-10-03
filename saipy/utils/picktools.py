@@ -224,7 +224,7 @@ def phase_picking(device, model, stream, bandpass_filter_flag, picker_num_shift,
     if math.isnan(s_max):
         picks.append(0)
     else:
-        picks.append(list(prob_S).index(s_max))
+        picks.append(list(prob_P).index(p_max)+ list(prob_S[list(prob_P).index(p_max):]).index(s_max))
     
     pwave = []
     swave = []
