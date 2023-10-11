@@ -121,7 +121,7 @@ def save_results(path, file_name, network, station, location, channel, start_tim
             df_result.to_csv(result_file, index=False)
                 
                 
-def monitor1(wsp, network, station, location, channel, start_time, end_time, device, leng_win, shift=10, 
+def monitor1(wsp, network, station, location, channel, start_time, end_time, device, leng_win, detection_windows = 5, shift=10, 
                picker_num_shift=1, save_result=False, path=None, file_name=None):
     
     ## making sure to remove any existing result file with same name
@@ -152,8 +152,8 @@ def monitor1(wsp, network, station, location, channel, start_time, end_time, dev
     
     P_picks, S_picks, mags, polarity_pred = [], [], [], []
     while i < len_win:
-        if i+5 <= len_win-1: 
-            index_list = win_id1[i:i+5]
+        if i+detection_windows <= len_win-1: 
+            index_list = win_id1[i:i+detection_windows]
             flag, id = check_continuity(index_list)
 #             print(id, index_list)
             if flag:
@@ -169,7 +169,7 @@ def monitor1(wsp, network, station, location, channel, start_time, end_time, dev
                 
                 P_picks.append(pred[0])
                 S_picks.append(pred[1])
-                mags.append(pred[2] if pred[2] is not None else 0)
+                mags.append(pred[2])
                 polarity_pred.append([pred[3], pred[4]])
                 
                 # visualization
