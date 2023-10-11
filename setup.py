@@ -32,7 +32,8 @@ setup(
 	'obspy>=1.4.0',
 	'jupyter>=1.0.0',
 	'seaborn>=0.12.2',
-	'scikit-learn>=0.24.1'], 
+	'scikit-learn>=0.24.1',
+   	 'torch>=1.12.1+cu113'], 
     
     python_requires='>=3.8',
 )
