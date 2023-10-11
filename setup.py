@@ -23,7 +23,7 @@ setup(
 	'pkginfo>=1.7.0',
 	'scipy>=1.6.2',
 	'tensorflow-estimator>=2.12.0',	
-    'tensorflow~=2.8.0',  
+    	'tensorflow>=2.8.0',  
 	'keras>=2.8.0', 
 	'matplotlib>=3.7.1', 
 	'pandas>=1.1.5',
