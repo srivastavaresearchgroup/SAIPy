@@ -8,7 +8,7 @@ To install this package clone this repository using
 
   Then change working directory to SAIPy and run the following command:
 
-      python3 pip install .
+      pip install .
 
   (make sure to use the correct version of python installed in your system for the above command)
 
