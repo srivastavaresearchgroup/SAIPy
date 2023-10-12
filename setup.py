@@ -18,12 +18,10 @@ setup(
     packages=find_packages(exclude="tests"),
     install_requires=[
 	'pytest>=6.2.3',
-	'numpy>=1.21.0',      
 	'keyring>=22.3.0', 
 	'pkginfo>=1.7.0',
 	'scipy>=1.6.2',
-	'tensorflow-estimator>=2.12.0',	
-    	'tensorflow>=2.8.0',  
+	'tensorflow>=2.8.0',  
 	'keras>=2.8.0', 
 	'matplotlib>=3.7.1', 
 	'pandas>=1.1.5',
