@@ -183,10 +183,10 @@ def monitor1(wsp, network, station, location, channel, start_time, end_time, dev
                 if len(np.array(win_id1)[np.array(win_id1) > next_ind]) == 0:
                     break
                 i = win_id1.index(np.array(win_id1)[np.array(win_id1) > next_ind][0])
-                print("No (more) events detected till {}".format(start_time + i/10))
+                print("No (more) events detected till {}".format(start_time + win_id1[i] * shift /100))
             else:
                 i = win_id1.index(id)+1
-                print("No (more) events detected till {}".format(start_time + i/10))
+                print("No (more) events detected till {}".format(start_time + win_id1[i] * shift /100))
                 
         else: 
             break
@@ -260,10 +260,10 @@ def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_n
                 if len(np.array(win_id1)[np.array(win_id1) > next_ind]) == 0:
                     break
                 i = win_id1.index(np.array(win_id1)[np.array(win_id1) > next_ind][0])
-                print("No (more) events detected till {}".format(start_time + i/10))
+                print("No (more) events detected till {}".format(start_time + win_id1[i] * shift /100))
             else:
                 i = win_id1.index(id)+1
-                print("No (more) events detected till {}".format(start_time + i/10))
+                print("No (more) events detected till {}".format(start_time + win_id1[i] * shift /100))
                 
         else: 
             break
