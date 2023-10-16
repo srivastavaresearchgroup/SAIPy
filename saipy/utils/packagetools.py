@@ -200,7 +200,7 @@ def monitor1(wsp, network, station, location, channel, start_time, end_time, dev
         
     return outputs
 
-def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_num_shift = 10, 
+def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_num_shift = 10, detection_windows = 5, 
                 save_result = False, path = './', file_name = None):
     
     ## making sure to remove any existing result file with same name
@@ -229,8 +229,8 @@ def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_n
     
     P_picks, S_picks, mags, polarity_pred = [], [], [], []
     while i < len_win:
-        if i+5 <= len_win-1: 
-            index_list = win_id1[i:i+5]
+        if i+ detection_windows <= len_win-1: 
+            index_list = win_id1[i:i+detection_windows]
             flag, id = check_continuity(index_list)
 #             print(id, index_list)
             if flag:
