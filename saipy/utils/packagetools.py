@@ -210,6 +210,7 @@ def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_n
             os.remove(result_file)
     
     st = read(path_to_stream, format = format)
+    start_time = st[0].times("utcdatetime")[0]  
     resample_stream, raw_waveform = preprocessing(st)
 
     window_waveform, creime_output = data_windows(raw_waveform, shift = shift)
