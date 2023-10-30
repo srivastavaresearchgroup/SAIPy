@@ -256,7 +256,7 @@ def monitor2(path_to_stream, device, leng_win, format=None, shift = 10, picker_n
                                   P_arr=pred[0], S_arr=pred[1], magnitude=pred[2])
                 plot_polarcap_data(raw_waveform[pred[0] - 32:pred[0] + 32][:,2], y_pred = [pred[3],pred[4]])
                 if save_result:
-                    save_results(path, file_name, network, station, location, channel, start_time, end_time, pred)
+                    save_results(path, file_name, st[0].stats.network, st[0].stats.station, st[0].stats.location, st[0].stats.channel, st[0].stats.starttime, st[0].stats.endtime, pred)
                 next_ind = id + win_id1.index(id) + int(leng_win*10)
                 if len(np.array(win_id1)[np.array(win_id1) > next_ind]) == 0:
                     break
