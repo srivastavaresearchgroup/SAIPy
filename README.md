@@ -6,7 +6,7 @@ To install this package clone this repository using
 
     git clone https://github.com/srivastavaresearchgroup/SAIPy.git
 
-  It is recommended that you create a virtual environment to install SAIpy. To do this, create a folder, create a virtual environment in that folder, and acticate the environment:
+  It is recommended that you create a virtual environment to install SAIPy. To do this, create a folder, create a virtual environment in that folder, and activate the environment:
      
     mkdir SAIpy_venv
     python3 -m venv SAIpy_venv
