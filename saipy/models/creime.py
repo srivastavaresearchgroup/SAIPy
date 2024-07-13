@@ -537,6 +537,7 @@ class CREIME:
         return model_summary
 
     def get_model(self, untrained = False):
+        # return the randomly initialized or trained model based on user choice
         if untrained:
             X = Input(shape = (512,3))
             x = layers.Conv1D(32, 16, padding = 'same')(X)
@@ -556,6 +557,7 @@ class CREIME:
         return self.model
     
     def predict(self, X):
+        # return the 512 sample outputs per waveform and a tuple containing event detection, magnitude and p-arrival time
         model = self.model
         y_pred = model.predict(X)
         
@@ -594,6 +596,7 @@ class CREIME_RT:
 
         
     def get_model(self, untrained = False):
+        # return the randomly initialized or trained model based on user choice
         if untrained:
             lr = 1e-3
     
@@ -638,6 +641,7 @@ class CREIME_RT:
         return self.model
     
     def predict(self, X):
+        # return the 6000 sample outputs per waveform and a tuple containing event detection and magnitude
         model = self.model
         
         X_test = np.zeros((len(X), 6000, 3))
@@ -664,7 +668,7 @@ class CREIME_RT:
                     yield ([x_batch, x_batch_stft], y_batch)
                     
         y_pred = model.predict(test_generator(), steps = len(y_test) // batch_size + 1)
-        
+
         mp = [np.mean(y[-10:]) for y in y_pred]
         
         n_p = [mval < -0.5 for mval in mp]
