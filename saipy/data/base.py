@@ -16,7 +16,10 @@ from tensorflow.keras.utils import to_categorical
 
 
 def string_convertor(dd):
-    
+    """
+    Code to convert snr from metadata into a list
+    source: https://github.com/smousavi05/STEAD/
+    """
     dd2 = str(dd).split()
     SNR = []
     for i, d in enumerate(dd2):
@@ -40,6 +43,7 @@ def string_convertor(dd):
     return(SNR)
 
 def spec(X):
+    # function to return the spectrogram for a waveform
     X_spec = []
     for i in range(3):
         X_spec.append(np.absolute(stft(X[:,i], 100)[2]))
@@ -47,6 +51,10 @@ def spec(X):
     return np.transpose(np.array(X_spec), (1,2,0))
 
 class STEAD:
+    """
+    STEAD dataset (https://ieeexplore.ieee.org/document/8871127)
+    looks for the downloaded dataset in the current working directory unless specified otherwise
+    """
     def __init__(self, directory = os.getcwd(), metadata_only = False):
         self.metadata = None
         self.waveforms = None
@@ -82,6 +90,7 @@ class STEAD:
         return self.metadata['trace_name'].to_list()
     
     def distribution(self, parameter, traces = None, log = False, ax = None, color = 'slategrey'):
+        # plot the distrinution of specific parameters for all or selected traces
         if traces is None:
             df = self.metadata
         else:
@@ -95,7 +104,7 @@ class STEAD:
         ax.set_ylabel('Frequeny')
 
     def get_creime_data(self,traces = None):
-        
+        # get data and labels formatted for CREIME for all or selected traces
         if self.waveforms is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
@@ -137,7 +146,7 @@ class STEAD:
     
     
     def get_polarcap_data(self,traces = None):
-        
+        # get data and labels formatted for PolarCAP for all or selected traces
         if self.waveforms is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
@@ -162,7 +171,7 @@ class STEAD:
         return (np.array(Xarr))
     
     def get_creime_rt_data(self,traces = None, training = False):
-        
+        # get data and labels formatted for CREIME_RT for all or selected traces
         if self.waveforms is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
@@ -217,6 +226,10 @@ class STEAD:
         return self.metadata, self.waveforms
     
 class INSTANCE:
+    """
+    INSTANCE dataset (https://www.pi.ingv.it/banche-dati/instance/)
+    looks for the downloaded dataset in the current working directory unless specified otherwise
+    """
     def __init__(self, directory=os.getcwd(), metadata_only=False, data='both'):
         self.metadata_n = None
         self.waveforms_n = None
@@ -283,7 +296,7 @@ class INSTANCE:
         ax.set_ylabel('Frequeny')
 
     def get_creime_data(self,traces_n=None, traces_ev=None):
-        
+        # get data and labels formatted for CREIME for all or selected traces
         if self.waveforms_ev is None and self.waveforms_n is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
@@ -331,7 +344,7 @@ class INSTANCE:
     
     
     def get_polarcap_data(self,traces = None, training = False):
-        
+        # get data and labels formatted for PolarCAP for all or selected traces
         if self.waveforms_ev is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
@@ -358,7 +371,7 @@ class INSTANCE:
         return (np.array(Xarr), to_categorical((np.array(yarr) == 'positive').astype(int)))
         
     def get_creime_rt_data(self,traces_n = None,traces_ev = None, training = False):
-        
+        # get data and labels formatted for CREIME_RT for all or selected traces
         if self.waveforms_ev is None and self.waveforms_n is None:
             raise ValueError(
                 "No waveform data found. Please set metadata_only = False (default option), while loading the dataset.")
