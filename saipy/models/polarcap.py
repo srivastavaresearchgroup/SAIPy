@@ -35,6 +35,7 @@ class PolarCAP:
         return model_summary
 
     def get_model(self, untrained = False):
+        # get trained model or model with random initialization
         if untrained:
             drop_rate = 0.3
             lr = 1e-3
@@ -72,6 +73,7 @@ class PolarCAP:
         return self.model
     
     def predict(self, X):
+        # get model predictions 1 (up) and 0 (down) for a waveform
         model = self.model
         y_pred = model.predict(norm(X))
         
