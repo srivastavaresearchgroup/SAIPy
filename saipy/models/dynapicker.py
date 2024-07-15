@@ -99,6 +99,7 @@ class DYCls(nn.Module):
         x = self.cls_p(x)
         return x + r
 
+# dynamicpicker v1 
 class dynapickerv1(nn.Module):
     def __init__(self):
         super().__init__()
@@ -182,7 +183,7 @@ class dynapickerv1(nn.Module):
         return x2
 
     
-
+# loading model
 def load_model(path):
     if os.path.exists(path):
         model = torch.jit.load(path, map_location='cpu')
@@ -191,6 +192,9 @@ def load_model(path):
     return model
 
 def arguments():
+    """
+    arguments for retraining model
+    """
     parser = argparse.ArgumentParser(description='Phase identification')
     parser.add_argument('--batch_size', action='store', type=int, default=3, help='number of data in a batch')
     parser.add_argument('--lr', action='store', type=float, default=0.001, help='initial learning rate')
