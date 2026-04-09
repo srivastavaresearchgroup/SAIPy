@@ -30,11 +30,12 @@ The documentation for using the last updates of the SAIPy package is in [SAIPy_D
 We strive to constantly improve and update SAIPy.
 
 Should you have any queries or suggestions do not hesitate to contact the authors:
-* Megha Chakraborty
-* Wei Li
+
 * Claudia Quinteros Cartaya (quinterosclaudia@gmail.com)
 * Johannes Faber [fais.udder466@passinbox.com](mailto:fais.udder466@passinbox.com)
 * Nishtha Srivastava-Team leader [n.srivastava@em.uni-frankfurt.de](mailto:n.srivastava@em.uni-frankfurt.de)
+* Megha Chakraborty
+* Wei Li
   
 ## Citation
 Cite as:
