@@ -33,7 +33,7 @@ Should you have any queries or suggestions do not hesitate to contact the author
 
 * Claudia Quinteros Cartaya (quinterosclaudia@gmail.com)
 * Johannes Faber [fais.udder466@passinbox.com](mailto:fais.udder466@passinbox.com)
-* Nishtha Srivastava-Team leader [n.srivastava@em.uni-frankfurt.de](mailto:n.srivastava@em.uni-frankfurt.de)
+* Nishtha Srivastava — Team leader — [n.srivastava@em.uni-frankfurt.de](mailto:n.srivastava@em.uni-frankfurt.de)
 * Megha Chakraborty
 * Wei Li
   
